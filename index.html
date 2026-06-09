@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="nl" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Informatica H4 — Kennen & Kunnen (E1, E2, F2-F3)</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --e1:#4f9cf9; --e2:#a78bfa; --f2:#34d399;
+  --tr:0.2s ease;
+}
+[data-theme="light"] {
+  --bg:#f1f5f9; --surf:#fff; --surf2:#e8eef5;
+  --bd:#d1dae8; --txt:#1a202c; --txt2:#374151; --txt3:#6b7280;
+  --hbg:#f1f5f9f0; --reven:#fff; --rodd:#f8fafc;
+  --make-bg:rgba(22,163,74,.09); --make-fg:#15803d; --make-bd:rgba(22,163,74,.25);
+  --skip-bg:rgba(220,38,38,.07); --skip-fg:#b91c1c; --skip-bd:rgba(220,38,38,.2);
+  --ken-bg:rgba(180,120,0,.09);  --ken-fg:#92400e;  --ken-bd:rgba(180,120,0,.25);
+  --kun-bg:rgba(37,99,235,.08);  --kun-fg:#1d4ed8;  --kun-bd:rgba(37,99,235,.2);
+  --kk-row:#fff8e6;
+  --knob:#f59e0b; --track:#dbeafe;
+  --ohbg:#f8fafc; --ohhov:#eef2f7; --thbg:#f1f5f9;
+  --kk-btn-bg:rgba(160,100,0,.09); --kk-btn-fg:#7c4a00; --kk-btn-bd:#b07d3a;
+}
+[data-theme="dark"] {
+  --bg:#0f1117; --surf:#181c27; --surf2:#1e2333;
+  --bd:#2a3045; --txt:#e2e8f0; --txt2:#94a3b8; --txt3:#64748b;
+  --hbg:#0f1117f0; --reven:#0f1117; --rodd:#131722;
+  --make-bg:rgba(34,197,94,.10); --make-fg:#4ade80; --make-bd:rgba(34,197,94,.25);
+  --skip-bg:rgba(239,68,68,.08); --skip-fg:#f87171; --skip-bd:rgba(239,68,68,.2);
+  --ken-bg:rgba(234,179,8,.10);  --ken-fg:#fbbf24;  --ken-bd:rgba(234,179,8,.25);
+  --kun-bg:rgba(79,156,249,.10); --kun-fg:#60a5fa;  --kun-bd:rgba(79,156,249,.25);
+  --kk-row:#2a2510;
+  --knob:#4f9cf9; --track:#1e2333;
+  --ohbg:#181c27; --ohhov:#222840; --thbg:#181c27;
+  --kk-btn-bg:rgba(234,179,8,.12); --kk-btn-fg:#fbbf24; --kk-btn-bd:rgba(234,179,8,.4);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;padding-bottom:60px;transition:background var(--tr),color var(--tr)}
+
+header{background:var(--hbg);border-bottom:1px solid var(--bd);padding:22px 36px 16px;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);transition:background var(--tr)}
+.hi{max-width:1160px;margin:0 auto}
+.ht{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.logo{background:linear-gradient(135deg,var(--e1),var(--e2));width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:15px;font-weight:700;color:#fff;flex-shrink:0;box-shadow:0 3px 12px rgba(79,156,249,.3)}
+.ht-txt{flex:1}
+.ht-txt h1{font-family:'Space Mono',monospace;font-size:17px;font-weight:700;color:var(--txt);letter-spacing:-.3px;transition:color var(--tr)}
+.ht-txt p{font-size:11px;color:var(--txt3);margin-top:2px}
+.ttog{display:flex;align-items:center;gap:7px;background:var(--surf);border:1px solid var(--bd);border-radius:999px;padding:5px 11px 5px 9px;cursor:pointer;font-size:12px;color:var(--txt3);font-family:'DM Sans',sans-serif;transition:all var(--tr);flex-shrink:0}
+.ttog:hover{border-color:var(--e1)}
+.ttrack{width:30px;height:16px;background:var(--track);border-radius:999px;border:1px solid var(--bd);position:relative;flex-shrink:0}
+.tknob{width:10px;height:10px;background:var(--knob);border-radius:50%;position:absolute;top:2px;left:2px;transition:transform var(--tr)}
+[data-theme="light"] .tknob{transform:translateX(14px)}
+
+.ctrl{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.sw{position:relative;flex:1;min-width:180px;max-width:300px}
+.sw svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--txt3);pointer-events:none}
+.sw input{width:100%;background:var(--surf);border:1px solid var(--bd);border-radius:7px;padding:7px 11px 7px 31px;color:var(--txt);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:border-color .2s}
+.sw input:focus{border-color:var(--e1)}
+.sw input::placeholder{color:var(--txt3)}
+.fg{display:flex;gap:5px;flex-wrap:wrap}
+.sep{width:1px;height:22px;background:var(--bd);margin:0 3px}
+
+.fb{background:var(--surf);border:1px solid var(--bd);border-radius:7px;padding:6px 12px;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--txt3);cursor:pointer;transition:all .15s;letter-spacing:.3px;white-space:nowrap}
+.fb:hover{border-color:var(--e1);color:var(--txt)}
+.fb.a-all{background:rgba(79,156,249,.12);border-color:var(--e1);color:var(--e1)}
+.fb.a-e1 {background:rgba(79,156,249,.12);border-color:var(--e1);color:var(--e1)}
+.fb.a-e2 {background:rgba(167,139,250,.12);border-color:var(--e2);color:var(--e2)}
+.fb.a-f2 {background:rgba(52,211,153,.12);border-color:var(--f2);color:var(--f2)}
+.fb.a-kk {background:var(--kk-btn-bg);border-color:var(--kk-btn-bd);color:var(--kk-btn-fg)}
+
+.sbar{max-width:1160px;margin:12px auto 0;padding:0 36px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chip{font-size:11px;color:var(--txt3);background:var(--surf);border:1px solid var(--bd);border-radius:5px;padding:3px 8px;font-family:'Space Mono',monospace}
+
+.bs{max-width:1160px;margin:28px auto 0;padding:0 36px}
+.bh{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--bd)}
+.btag{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;border-radius:5px;padding:3px 8px;color:#fff;letter-spacing:.5px;flex-shrink:0}
+.t1{background:var(--e1)}.t2{background:var(--e2)}.t3{background:var(--f2)}
+.bs h2{font-family:'Space Mono',monospace;font-size:14px;font-weight:700;color:var(--txt)}
+.bnm{font-size:13px;color:var(--txt2);flex:1}
+.bwk{font-family:'Space Mono',monospace;font-size:11px;color:var(--txt3);background:var(--surf2);border:1px solid var(--bd);border-radius:5px;padding:2px 8px}
+
+.og{margin-bottom:4px}
+.oh{display:flex;align-items:center;gap:9px;background:var(--ohbg);border:1px solid var(--bd);border-radius:8px;padding:10px 14px;cursor:pointer;transition:background .15s,border-color .15s;user-select:none}
+.oh:hover{background:var(--ohhov);border-color:rgba(79,156,249,.4)}
+.odot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.otit{font-size:13px;font-weight:500;flex:1;color:var(--txt)}
+.ocnt{font-family:'Space Mono',monospace;font-size:10px;color:var(--txt3)}
+.chv{color:var(--txt3);transition:transform .2s;flex-shrink:0}
+.oh:not(.closed) .chv{transform:rotate(180deg)}
+
+.tw{overflow-x:auto;border:1px solid var(--bd);border-top:none;border-radius:0 0 8px 8px;background:var(--surf)}
+table{width:100%;border-collapse:collapse;font-size:12.5px;table-layout:fixed}
+col.c-par  {width:60px}
+col.c-maken{width:28%}
+col.c-niet {width:18%}
+col.c-ken  {width:27%}
+col.c-kun  {width:27%}
+thead tr{background:var(--thbg)}
+th{padding:8px 12px;text-align:left;font-family:'Space Mono',monospace;font-size:10.5px;font-weight:700;color:var(--txt3);letter-spacing:.3px;border-bottom:1px solid var(--bd);white-space:nowrap;overflow:hidden}
+tbody tr:nth-child(even){background:var(--rodd)}
+tbody tr:nth-child(odd){background:var(--reven)}
+td{padding:7px 12px;vertical-align:top;border-bottom:1px solid var(--bd);color:var(--txt2);overflow-wrap:break-word}
+td:first-child{font-family:'Space Mono',monospace;font-size:11px;color:var(--txt3);white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+
+.b{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11.5px;font-weight:500;border:1px solid}
+.bm {background:var(--make-bg);color:var(--make-fg);border-color:var(--make-bd)}
+.bs2{background:var(--skip-bg);color:var(--skip-fg);border-color:var(--skip-bd)}
+.bk {background:var(--ken-bg);color:var(--ken-fg);border-color:var(--ken-bd)}
+.bu {background:var(--kun-bg);color:var(--kun-fg);border-color:var(--kun-bd)}
+.dash{color:var(--txt3);font-size:12px}
+
+.kk-on td:nth-child(2),.kk-on td:nth-child(3){opacity:.28}
+tr.kk-row{background:var(--kk-row)!important}
+#banner{background:var(--ken-bg);border:1px solid var(--ken-bd);border-radius:7px;padding:7px 14px 7px 50px;font-size:12px;color:var(--ken-fg);max-width:1160px;margin:10px auto 0;display:none}
+
+.leg{max-width:1160px;margin:16px auto 0;padding:0 36px;display:flex;gap:14px;flex-wrap:wrap}
+.li{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--txt3)}
+
+.empty{display:none;text-align:center;padding:60px 20px;color:var(--txt3)}
+.empty svg{margin:0 auto 10px;display:block}
+
+@media(max-width:700px){
+  header{padding:14px 16px 12px}
+  .bs{padding:0 12px}
+  .sbar{padding:0 12px}
+  .leg{padding:0 12px}
+  th:nth-child(3),td:nth-child(3){display:none}
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="hi">
+  <div class="ht">
+    <div class="logo">INF</div>
+    <div class="ht-txt">
+      <h1>Informatica H4 — Kennen &amp; Kunnen</h1>
+      <p>Examenperiode · E1, E2, F2-F3 · Develstein College</p>
+    </div>
+    <button class="ttog" id="togTheme" aria-label="Thema wisselen">
+      <div class="ttrack"><div class="tknob"></div></div>
+      <span id="ticon">🌙</span>
+      <span id="tlbl">Dark</span>
+    </button>
+  </div>
+  <div class="ctrl">
+    <div class="sw">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="search" id="zoek" placeholder="Zoek paragraaf of onderwerp…">
+    </div>
+    <div class="fg">
+      <button class="fb a-all" data-blok="all">Alle</button>
+      <button class="fb" data-blok="e1">E1</button>
+      <button class="fb" data-blok="e2">E2</button>
+      <button class="fb" data-blok="f2">F2-F3</button>
+      <div class="sep"></div>
+      <button class="fb" id="btnKK">
+        <span>Kennen &amp; Kunnen</span>
+        <button onclick="resetKK()" title="Filter wissen" style="background:none;border:none;cursor:pointer;color:inherit;padding:0 0 0 4px;font-size:12px">✕</button>
+      </button>
+    </div>
+  </div>
+</div>
+</header>
+
+<div id="banner">💡 Alleen rijen met een Kennen of Kunnen-doelstelling worden getoond.</div>
+
+<div class="sbar">
+  <span class="chip"><span id="cnt">0</span> rijen zichtbaar</span>
+</div>
+
+<div class="leg">
+  <div class="li"><span class="b bm">Maken</span> Te maken opdrachten</div>
+  <div class="li"><span class="b bs2">Niet maken</span> Overslaan</div>
+  <div class="li"><span class="b bk">Kennen</span> Leren / begrijpen</div>
+  <div class="li"><span class="b bu">Kunnen</span> Toepassen</div>
+</div>
+
+<main id="mc"></main>
+<div class="empty" id="empty">
+  <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+  <p>Geen resultaten gevonden.</p>
+</div>
+
+<script>
+const BLOKKEN = {
+  e1:{label:"E1", naam:"Hard- en software",        week:"Week 24+25"},
+  e2:{label:"E2", naam:"Security",                  week:"Week 24+25"},
+  f2:{label:"F2-F3", naam:"Denken over informatica",   week:"Week 26"},
+};
+const DOTS = {e1:"#4f9cf9",e2:"#a78bfa",f2:"#34d399"};
+
+const GROEPEN = [
+  {blok:"e1",naam:"1. Drielagenmodel",rijen:[
+    {par:"1.1",maken:"Alleen doorlezen",niet:"",ken:"",kun:""},
+    {par:"1.2",maken:"Vraag 1 maken",niet:"",ken:"Leren",kun:""},
+    {par:"1.3",maken:"Vragen 1 t/m 3 maken",niet:"",ken:"",kun:""},
+  ]},
+  {blok:"e1",naam:"2. Het lagenmodel herkennen",rijen:[
+    {par:"2.1",maken:"Alleen doorlezen",niet:"",ken:"",kun:""},
+    {par:"2.2",maken:"Vragen 1 en 2 maken",niet:"",ken:"Leren",kun:""},
+    {par:"2.3",maken:"Vragen 1 t/m 5 + oefenprogramma",niet:"",ken:"Leren",kun:""},
+  ]},
+  {blok:"e1",naam:"3. Soorten computers",rijen:[
+    {par:"3.1",maken:"Alleen doorlezen",niet:"",ken:"",kun:""},
+    {par:"3.2",maken:"Alleen vraag 1 maken",niet:"",ken:"Leren",kun:""},
+    {par:"3.4",maken:"Alleen doorlezen",niet:"",ken:"",kun:""},
+    {par:"3.5",maken:"Vragen 1 + 2 + 5 maken",niet:"",ken:"Leren",kun:""},
+    {par:"3.6",maken:"OVERSLAAN",niet:"3.6 niet",ken:"",kun:""},
+  ]},
+  {blok:"e1",naam:"4. Hardware",rijen:[
+    {par:"4.1",maken:"Alleen doorlezen",niet:"",ken:"",kun:""},
+    {par:"4.2",maken:"Alleen doorlezen",niet:"Intermezzo game",ken:"",kun:""},
+    {par:"4.3",maken:"Vragen 1 en 2 maken",niet:"",ken:"Leren",kun:""},
+    {par:"4.4",maken:"Vraag 1 maken",niet:"",ken:"",kun:""},
+    {par:"4.5",maken:"Vragen 1 en 2 maken",niet:"",ken:"Leren",kun:""},
+    {par:"4.6",maken:"Vragen 1 t/m 3 maken",niet:"",ken:"Leren",kun:""},
+    {par:"4.7",maken:"Vragen 1 en 2 maken",niet:"",ken:"Leren van toegepaste termen",kun:""},
+    {par:"4.8",maken:"Vraag 1 maken",niet:"",ken:"",kun:""},
+    {par:"4.9",maken:"Alleen doorlezen",niet:"",ken:"Leren",kun:"Connectoren herkennen"},
+    {par:"4.10",maken:"OVERSLAAN",niet:"4.10 niet",ken:"",kun:""},
+  ]},
+  {blok:"e1",naam:"5. Software",rijen:[
+    {par:"5.1",maken:"Alleen doorlezen",niet:"",ken:"",kun:""},
+    {par:"5.2",maken:"Vragen 1 t/m 4 maken",niet:"",ken:"",kun:""},
+    {par:"5.3",maken:"Alleen doorlezen",niet:"",ken:"Leren",kun:""},
+    {par:"5.4",maken:"OVERSLAAN",niet:"5.4 niet",ken:"",kun:""},
+    {par:"5.5",maken:"Alleen doorlezen",niet:"",ken:"",kun:""},
+    {par:"5.6",maken:"OVERSLAAN",niet:"5.6 niet",ken:"",kun:""},
+    {par:"5.7",maken:"Alleen doorlezen",niet:"",ken:"",kun:""},
+  ]},
+  {blok:"e1",naam:"6. Datacommunicatie",rijen:[
+    {par:"6.1",maken:"OVERSLAAN",niet:"6.1 niet",ken:"",kun:""},
+    {par:"6.2",maken:"OVERSLAAN",niet:"6.2 niet",ken:"",kun:""},
+    {par:"6.3",maken:"OVERSLAAN",niet:"6.3 niet",ken:"",kun:""},
+    {par:"6.4",maken:"OVERSLAAN",niet:"6.4 niet",ken:"",kun:""},
+    {par:"6.5",maken:"OVERSLAAN",niet:"6.5 niet",ken:"",kun:""},
+    {par:"6.6",maken:"OVERSLAAN",niet:"6.6 niet",ken:"",kun:""},
+    {par:"6.7",maken:"Vragen 1 t/m 3 maken",niet:"",ken:"Leren",kun:""},
+    {par:"6.8",maken:"Vragen 1 en 2 maken",niet:"",ken:"Leren",kun:""},
+  ]},
+  {blok:"e2",naam:"1. Digitale veiligheid",rijen:[
+    {par:"1.1",maken:"Alleen doorlezen",niet:"",ken:"",kun:""},
+    {par:"1.2",maken:"Alleen doorlezen",niet:"",ken:"",kun:""},
+    {par:"1.3",maken:"Vragen 1 en 2 maken",niet:"",ken:"",kun:""},
+    {par:"1.4",maken:"Alleen doorlezen",niet:"",ken:"",kun:""},
+    {par:"1.5",maken:"Vragen 1 t/m 7 maken",niet:"",ken:"Termen leren",kun:""},
+  ]},
+  {blok:"e2",naam:"2. Bedreigingen",rijen:[
+    {par:"2.1",maken:"Alleen doorlezen",niet:"",ken:"",kun:""},
+    {par:"2.2",maken:"Vragen 1 t/m 3 maken",niet:"",ken:"Leren",kun:""},
+    {par:"2.3",maken:"Vragen 1 t/m 6 maken",niet:"",ken:"Leren",kun:""},
+    {par:"2.4",maken:"Vragen 1 t/m 5 maken",niet:"",ken:"Leren",kun:""},
+    {par:"2.5",maken:"Vragen 1 t/m 8 maken",niet:"",ken:"Leren",kun:""},
+    {par:"2.6",maken:"Alleen doorlezen",niet:"",ken:"",kun:""},
+  ]},
+  {blok:"e2",naam:"3. Aanvallers en verdedigers",rijen:[
+    {par:"3.1",maken:"Alleen doorlezen",niet:"",ken:"",kun:""},
+    {par:"3.2",maken:"Vraag 2 maken",niet:"",ken:"Leren",kun:""},
+    {par:"3.3",maken:"Vragen 1 en 2 maken",niet:"",ken:"Leren",kun:""},
+    {par:"3.4",maken:"Vragen 1 t/m 3 maken",niet:"",ken:"Leren",kun:""},
+    {par:"3.5",maken:"Alleen doorlezen",niet:"",ken:"",kun:""},
+  ]},
+  {blok:"e2",naam:"4. Maatregelen",rijen:[
+    {par:"4.1",maken:"Alleen doorlezen",niet:"",ken:"",kun:""},
+    {par:"4.2",maken:"Vragen 1 en 2 maken",niet:"",ken:"Leren",kun:""},
+    {par:"4.3",maken:"Alleen doorlezen",niet:"",ken:"",kun:""},
+    {par:"4.4",maken:"Vragen 1 t/m 3 maken",niet:"",ken:"",kun:""},
+    {par:"4.5",maken:"Alleen doorlezen",niet:"",ken:"Leren",kun:""},
+    {par:"4.6",maken:"Alleen doorlezen",niet:"",ken:"Leren",kun:""},
+    {par:"4.7",maken:"Vragen 1 en 2 maken",niet:"",ken:"",kun:""},
+    {par:"4.8",maken:"Vragen 1 en 2 maken",niet:"",ken:"",kun:""},
+  ]},
+  {blok:"f2",naam:"1. ICT en de maatschappij",rijen:[
+    {par:"1.1",maken:"Alleen doorlezen",niet:"",ken:"",kun:""},
+    {par:"1.2",maken:"Alleen doorlezen",niet:"",ken:"",kun:""},
+    {par:"1.3",maken:"Vragen 1 en 2 maken",niet:"",ken:"",kun:""},
+    {par:"1.4",maken:"Vragen 1 t/m 4 maken",niet:"",ken:"Leren",kun:""},
+    {par:"1.5",maken:"Vragen 1 t/m 6 maken",niet:"",ken:"",kun:""},
+  ]},
+  {blok:"f2",naam:"2. De vele kanten van ICT",rijen:[
+    {par:"2.1",maken:"Alleen doorlezen",niet:"",ken:"",kun:""},
+    {par:"2.2",maken:"Doorlezen + vraag 6 maken",niet:"",ken:"Termen leren",kun:""},
+    {par:"2.3",maken:"Alleen doorlezen",niet:"",ken:"",kun:""},
+    {par:"2.4",maken:"Alleen doorlezen",niet:"",ken:"",kun:""},
+    {par:"2.5",maken:"Alleen doorlezen + artikel vraag 3 lezen",niet:"",ken:"",kun:""},
+  ]},
+  {blok:"f2",naam:"3. Pessimisme en optimisme",rijen:[
+    {par:"3.1",maken:"Alleen doorlezen",niet:"",ken:"",kun:""},
+    {par:"3.2",maken:"Vragen 1 t/m 4 maken",niet:"",ken:"",kun:""},
+    {par:"3.3",maken:"Alleen doorlezen",niet:"",ken:"Termen leren",kun:""},
+    {par:"3.4",maken:"Alleen doorlezen",niet:"",ken:"",kun:""},
+  ]},
+  {blok:"f2",naam:"4. Goede techniek?",rijen:[
+    {par:"4.1",maken:"Alleen doorlezen",niet:"",ken:"",kun:""},
+    {par:"4.2",maken:"Vragen 1 t/m 3 maken",niet:"",ken:"",kun:""},
+    {par:"4.3",maken:"Vragen 1 t/m 4 maken",niet:"",ken:"Leren",kun:""},
+    {par:"4.4",maken:"Vragen 1 t/m 5 maken",niet:"",ken:"",kun:""},
+    {par:"4.5",maken:"Vragen 1 en 2 maken",niet:"",ken:"",kun:""},
+    {par:"4.6",maken:"Vraag 1 maken",niet:"",ken:"",kun:""},
+    {par:"4.7",maken:"OVERSLAAN",niet:"4.7 niet",ken:"",kun:""},
+  ]},
+];
+
+function bdg(v,c){
+  if(!v) return '';
+  if(v==='Geen') return '<span class="dash">—</span>';
+  return `<span class="b ${c}">${v}</span>`;
+}
+
+(function build(){
+  const mc = document.getElementById('mc');
+  const secs={}, ord=[];
+  GROEPEN.forEach(g=>{
+    if(!secs[g.blok]){secs[g.blok]=[];ord.push(g.blok);}
+    secs[g.blok].push(g);
+  });
+
+  ord.forEach(bk=>{
+    const info = BLOKKEN[bk];
+    const sec  = document.createElement('div');
+    sec.className = 'bs';
+    sec.id = 'sec-'+bk;
+    const tagNr = bk==='e1'?'1':bk==='e2'?'2':'3';
+    sec.innerHTML = `<div class="bh">
+      <span class="btag t${tagNr}">${info.label}</span>
+      <h2>${info.label}</h2>
+      <span class="bnm">${info.naam}</span>
+      <span class="bwk">${info.week}</span>
+    </div>`;
+
+    secs[bk].forEach((g,gi)=>{
+      const gid = `g-${bk}-${gi}`;
+      const div = document.createElement('div');
+      div.className = 'og';
+      div.id = gid+'-wrap';
+
+      const rijen = g.rijen.map(r=>{
+        const hk = (r.ken && r.ken!=='Geen') ? '1':'0';
+        const hu = (r.kun && r.kun!=='Geen') ? '1':'0';
+        const srch = [r.par,g.naam,r.maken,r.niet,r.ken,r.kun].join(' ').toLowerCase();
+        return `<tr data-s="${srch}" data-hk="${hk}" data-hu="${hu}">
+          <td>${r.par}</td>
+          <td>${bdg(r.maken,'bm')||'<span class="dash">—</span>'}</td>
+          <td>${bdg(r.niet,'bs2')}</td>
+          <td>${bdg(r.ken,'bk')}</td>
+          <td>${bdg(r.kun,'bu')}</td>
+        </tr>`;
+      }).join('');
+
+      div.innerHTML = `
+        <div class="oh closed" id="${gid}-hdr" onclick="tog('${gid}')">
+          <div class="odot" style="background:${DOTS[bk]}"></div>
+          <span class="otit">${g.naam}</span>
+          <span class="ocnt">${g.rijen.length} par.</span>
+          <svg class="chv" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="tw" id="${gid}-tbl" style="display:none">
+          <table id="${gid}-table">
+            <colgroup>
+              <col class="c-par"><col class="c-maken"><col class="c-niet"><col class="c-ken"><col class="c-kun">
+            </colgroup>
+            <thead><tr>
+              <th>Par.</th><th>Maken</th><th>Niet maken</th><th>Kennen (= leren)</th><th>Kunnen (= toepassen)</th>
+            </tr></thead>
+            <tbody>${rijen}</tbody>
+          </table>
+        </div>`;
+      sec.appendChild(div);
+    });
+    mc.appendChild(sec);
+  });
+})();
+
+function tog(gid){
+  const tbl = document.getElementById(gid+'-tbl');
+  const hdr = document.getElementById(gid+'-hdr');
+  const open = tbl.style.display !== 'none';
+  tbl.style.display = open ? 'none' : '';
+  hdr.classList.toggle('closed', open);
+}
+
+let actBlok = 'all';
+let actKK   = false;
+let actZoek = '';
+
+function filter(){
+  const q = actZoek.trim().toLowerCase();
+  let tot = 0;
+
+  document.querySelectorAll('.bs').forEach(sec=>{
+    const bk = sec.id.replace('sec-','');
+    if(actBlok !== 'all' && actBlok !== bk){
+      sec.style.display = 'none';
+      return;
+    }
+    sec.style.display = '';
+
+    sec.querySelectorAll('.og').forEach(og=>{
+      const gid  = og.id.replace('-wrap','');
+      const tbl  = document.getElementById(gid+'-tbl');
+      const hdr  = document.getElementById(gid+'-hdr');
+      const tabl = document.getElementById(gid+'-table');
+      const gnm  = og.querySelector('.otit').textContent.toLowerCase();
+
+      tabl.classList.toggle('kk-on', actKK);
+
+      let zichtbaar = 0;
+      tabl.querySelectorAll('tbody tr').forEach(tr=>{
+        const kkOk   = !actKK || tr.dataset.hk==='1' || tr.dataset.hu==='1';
+        const zoekOk = !q     || tr.dataset.s.includes(q) || gnm.includes(q);
+        const toon   = kkOk && zoekOk;
+        tr.style.display = toon ? '' : 'none';
+        tr.classList.toggle('kk-row', toon && actKK);
+        if(toon){ zichtbaar++; tot++; }
+      });
+
+      if(zichtbaar === 0){
+        og.style.display = 'none';
+      } else {
+        og.style.display = '';
+        if(actKK || actZoek.trim()){
+          tbl.style.display = '';
+          hdr.classList.remove('closed');
+        }
+      }
+    });
+  });
+
+  document.getElementById('cnt').textContent = tot;
+  document.getElementById('empty').style.display = tot===0 ? 'block':'none';
+  document.getElementById('banner').style.display = actKK ? '':'none';
+}
+
+document.querySelectorAll('[data-blok]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('[data-blok]').forEach(b=>b.className='fb');
+    actBlok = btn.dataset.blok;
+    btn.classList.add(actBlok==='all'?'a-all':'a-'+actBlok);
+    if(actBlok==='all'){
+      document.querySelectorAll('.og').forEach(og=>{
+        const gid = og.id.replace('-wrap','');
+        const tbl = document.getElementById(gid+'-tbl');
+        const hdr = document.getElementById(gid+'-hdr');
+        if(tbl){ tbl.style.display='none'; }
+        if(hdr){ hdr.classList.add('closed'); }
+      });
+    }
+    filter();
+  });
+});
+
+document.getElementById('btnKK').addEventListener('click',()=>{
+  actKK = !actKK;
+  document.getElementById('btnKK').classList.toggle('a-kk', actKK);
+  filter();
+});
+function resetKK(){
+  actKK = false;
+  document.getElementById('btnKK').classList.remove('a-kk');
+  filter();
+}
+
+document.getElementById('zoek').addEventListener('input',e=>{
+  actZoek = e.target.value;
+  filter();
+});
+
+const ROOT = document.documentElement;
+const TICON = document.getElementById('ticon');
+const TLBL  = document.getElementById('tlbl');
+function setTheme(t){
+  ROOT.setAttribute('data-theme',t);
+  localStorage.setItem('inf-theme',t);
+  TICON.textContent = t==='dark'?'☀️':'🌙';
+  TLBL.textContent  = t==='dark'?'Light':'Dark';
+}
+setTheme(localStorage.getItem('inf-theme')||'light');
+document.getElementById('togTheme').addEventListener('click',()=>{
+  setTheme(ROOT.getAttribute('data-theme')==='dark'?'light':'dark');
+});
+
+filter();
+</script>
+</body>
+</html>
